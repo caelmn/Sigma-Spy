@@ -215,14 +215,19 @@ function Files:LoadModules(Modules: {}, Data: {})
 	end
 
 	for _, Entry in ipairs(ModuleList) do
+		print('something')
+		task.wait(1)
+
 		local Name, Module = Entry[1], Entry[2]
 
 		print(Name)
 
 		if Module.Init then
 			Module:Init(Data)
-			task.wait()
 		end
+
+		print('not anything')
+		task.wait(1)
 	end
 end
 
