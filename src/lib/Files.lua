@@ -227,8 +227,8 @@ function Files:LoadModules(Modules: {}, Data: {})
 		end
 
 		print('not anything')
-		task.wait(1)
 	end
+	print('out of the loop')
 end
 
 function Files:CreateFont(Name: string, AssetId: string): string?
