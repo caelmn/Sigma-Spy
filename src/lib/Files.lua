@@ -208,21 +208,22 @@ function Files:LoadLibraries(Scripts: table, ...): table
 end
 
 function Files:LoadModules(Modules: {}, Data: {})
-	print("6c")
-	print("initial stuff")
-	for Name, Module in next, Modules do
-		print(Name)
-    end
-	print('actual stuff')
-    for Name, Module in next, Modules do
-		print(Name)
-        local Init = Module.Init
-        if not Init then continue end
+	local ModuleList = {}
 
-		--// Invoke :Init function 
-        Module:Init(Data)
-		task.wait()
-    end
+	for Name, Module in pairs(Modules) do
+		table.insert(ModuleList, {Name, Module})
+	end
+
+	for _, Entry in ipairs(ModuleList) do
+		local Name, Module = Entry[1], Entry[2]
+
+		print(Name)
+
+		if Module.Init then
+			Module:Init(Data)
+			task.wait()
+		end
+	end
 end
 
 function Files:CreateFont(Name: string, AssetId: string): string?
