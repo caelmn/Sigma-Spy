@@ -18,6 +18,7 @@ if typeof(Overwrites) == "table" then
 	end
 end
 
+print("1")
 --// Service handler
 local Services = setmetatable({}, {
 	__index = function(self, Name: string): Instance
@@ -26,6 +27,7 @@ local Services = setmetatable({}, {
 	end,
 })
 
+print("2")
 --// Files module
 local Files = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Files.lua"))()
 Files:PushConfig(Configuration)
@@ -33,6 +35,7 @@ Files:Init({
 	Services = Services
 })
 
+print("3")
 local Folder = Files.FolderName
 local Scripts = {
 	--// User configurations
@@ -42,14 +45,15 @@ local Scripts = {
 	Files = Files,
 
 	--// Libraries
-	Process = {"base64", "COMPILE: @lib/Process.lua"},
-	Hook = {"base64", "COMPILE: @lib/Hook.lua"},
-	Flags = {"base64", "COMPILE: @lib/Flags.lua"},
-	Ui = {"base64", "COMPILE: @lib/Ui.lua"},
-	Generation = {"base64", "COMPILE: @lib/Generation.lua"},
-	Communication = {"base64", "COMPILE: @lib/Communication.lua"}
+	Process = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Process.lua"))(),
+	Hook = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Hook.lua"))(),
+	Flags = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Flags.lua"))(),
+	Ui = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Ui.lua"))(),
+	Generation = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Generation.lua"))(),
+	Communication = loadstring(game:HttpGet("https://github.com/caelmn/Sigma-Spy/raw/refs/heads/main/src/lib/Communication.lua"))()
 }
 
+print("4")
 --// Services
 local Players: Players = Services.Players
 
@@ -62,21 +66,26 @@ local Generation = Modules.Generation
 local Communication = Modules.Communication
 local Config = Modules.Config
 
+print("5")
 --// Use custom font (optional)
 local FontContent = Files:GetAsset("ProggyClean.ttf", true)
 local FontJsonFile = Files:CreateFont("ProggyClean", FontContent)
 Ui:SetFontFile(FontJsonFile)
 
+print("6a")
 --// Load modules
 Process:CheckConfig(Config)
+print("6b")
 Files:LoadModules(Modules, {
 	Modules = Modules,
 	Services = Services
 })
 
+print("7")
 --// ReGui Create window
 local Window = Ui:CreateMainWindow()
 
+print("8")
 --// Check if Sigma spy is supported
 local Supported = Process:CheckIsSupported()
 if not Supported then 
@@ -84,6 +93,7 @@ if not Supported then
 	return
 end
 
+print("9")
 --// Create communication channel
 local ChannelId, Event = Communication:CreateChannel()
 Communication:AddCommCallback("QueueLog", function(...)
@@ -93,6 +103,7 @@ Communication:AddCommCallback("Print", function(...)
 	Ui:ConsoleLog(...)
 end)
 
+print("10")
 --// Generation swaps
 local LocalPlayer = Players.LocalPlayer
 Generation:SetSwapsCallback(function(self)
@@ -105,6 +116,7 @@ Generation:SetSwapsCallback(function(self)
 	})
 end)
 
+print("11")
 --// Create window content
 Ui:CreateWindowContent(Window)
 
@@ -112,6 +124,7 @@ Ui:CreateWindowContent(Window)
 Ui:SetCommChannel(Event)
 Ui:BeginLogService()
 
+print("12")
 --// Load hooks
 local ActorCode = Files:MakeActorScript(Scripts, ChannelId)
 Hook:LoadHooks(ActorCode, ChannelId)

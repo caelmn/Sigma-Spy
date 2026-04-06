@@ -208,12 +208,16 @@ function Files:LoadLibraries(Scripts: table, ...): table
 end
 
 function Files:LoadModules(Modules: {}, Data: {})
+	print("6c")
+	print(#Modules)
     for Name, Module in next, Modules do
+		print(Name)
         local Init = Module.Init
         if not Init then continue end
 
 		--// Invoke :Init function 
         Module:Init(Data)
+		task.wait()
     end
 end
 
