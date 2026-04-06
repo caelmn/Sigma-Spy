@@ -209,7 +209,11 @@ end
 
 function Files:LoadModules(Modules: {}, Data: {})
 	print("6c")
-	print(#Modules)
+	print("initial stuff")
+	for Name, Module in next, Modules do
+		print(Name)
+    end
+	print('actual stuff')
     for Name, Module in next, Modules do
 		print(Name)
         local Init = Module.Init
