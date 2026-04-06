@@ -73,17 +73,22 @@ local function Merge(Base: table, New: table?)
 end
 
 function Generation:Init(Data: table)
+	print("g0")
     local Modules = Data.Modules
 	local Configuration = Modules.Configuration
 
+	print("g1")
 	--// Modules
 	Config = Modules.Config
 	Hook = Modules.Hook
 	Flags = Modules.Flags
 	
+	print("g2")
 	--// Import parser
 	local ParserUrl = Configuration.ParserUrl
+	print("g3")
 	self:LoadParser(ParserUrl)
+	print("gDone")
 end
 
 function Generation:MakePrintable(String: string): string
@@ -108,6 +113,7 @@ function Generation:WriteDump(Content: string): string
 end
 
 function Generation:LoadParser(ModuleUrl: string)
+	print("g4")
 	ParserModule = loadstring(game:HttpGet(ModuleUrl), "Parser")()
 end
 
